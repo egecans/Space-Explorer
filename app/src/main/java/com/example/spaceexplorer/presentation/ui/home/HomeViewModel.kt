@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spaceexplorer.domain.usecase.GetLaunchesUseCase
 import com.example.spaceexplorer.presentation.model.LaunchesUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -12,6 +13,7 @@ import javax.inject.Inject
  * ViewModel for the master screen showing launches list.
  * Uses StateFlow for UI state exposure for easier testing and coroutine integration.
  */
+@HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getLaunchesUseCase: GetLaunchesUseCase
 ) : ViewModel() {

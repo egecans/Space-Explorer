@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase
 import com.example.spaceexplorer.presentation.model.LaunchDetailUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,6 +16,7 @@ import javax.inject.Inject
  * ViewModel for detail screen displaying single launch details.
  * Uses StateFlow for reactive UI state exposure.
  */
+@HiltViewModel
 class DetailViewModel @Inject constructor(
     private val getLaunchByIdUseCase: GetLaunchByIdUseCase,
     savedStateHandle: SavedStateHandle

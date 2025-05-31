@@ -7,6 +7,7 @@ import com.example.spaceexplorer.domain.model.Rocket
 import com.example.spaceexplorer.domain.repository.LaunchRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 /**
  * Concrete implementation of [LaunchRepository].
@@ -19,7 +20,7 @@ import kotlinx.coroutines.flow.flow
  * the domain layer depends only on abstractions (interfaces),
  * and this implementation depends on data-layer classes.
  */
-class LaunchRepositoryImpl(
+class LaunchRepositoryImpl @Inject constructor(
     private val apiService: SpaceXApiService
 ) : LaunchRepository {
 

@@ -1,14 +1,21 @@
+import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     // Add Hilt plugin here (see libs.versions later)
     id("com.google.dagger.hilt.android") version "2.48" apply true
     kotlin("kapt")
+    id("androidx.navigation.safeargs.kotlin") // navigation component for safe args
 }
 
 android {
     namespace = "com.example.spaceexplorer"
     compileSdk = 34
+
+    buildFeatures {
+        viewBinding = true
+    }
 
     defaultConfig {
         applicationId = "com.example.spaceexplorer"
@@ -47,6 +54,10 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation("androidx.recyclerview:recyclerview:1.3.1")
 
+    // fragment-ktx for Fragment support
+    implementation("androidx.fragment:fragment-ktx:1.6.1")
+
+
     // Lifecycle and ViewModel
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
@@ -64,12 +75,18 @@ dependencies {
 
     // Hilt DI
     implementation("com.google.dagger:hilt-android:2.48")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     kapt("com.google.dagger:hilt-compiler:2.48")
 
     // Room
     implementation("androidx.room:room-runtime:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
+
+    // Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.3")
 
     // Testing dependencies
     testImplementation(libs.junit)
