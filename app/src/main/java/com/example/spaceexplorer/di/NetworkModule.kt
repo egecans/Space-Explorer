@@ -1,5 +1,7 @@
 package com.example.spaceexplorer.di
 
+import com.example.spaceexplorer.common.NetworkChecker
+import com.example.spaceexplorer.common.NetworkUtils
 import com.example.spaceexplorer.data.api.SpaceXApiService
 import dagger.Module
 import dagger.Provides
@@ -14,6 +16,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    @Provides
+    fun provideNetworkChecker(): NetworkChecker = NetworkUtils()
 
     private const val BASE_URL = "https://api.spacexdata.com/v4/"
 
@@ -42,6 +47,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideSpaceXApiService(retrofit: Retrofit): SpaceXApiService =
-        retrofit.create(SpaceXApiService::class.java)
+    fun provideSpaceXApiService(retrofit: Retrofit): com.example.spaceexplorer.data.api.SpaceXApiService =
+        retrofit.create(com.example.spaceexplorer.data.api.SpaceXApiService::class.java)
 }

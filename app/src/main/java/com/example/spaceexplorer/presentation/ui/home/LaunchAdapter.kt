@@ -15,14 +15,14 @@ import com.example.spaceexplorer.domain.model.Launch
  * Binds [Launch] data to the item view using ViewBinding.
  */
 class LaunchAdapter(
-    private val launches: List<Launch>,
-    private val onItemClick: (Launch) -> Unit
+    private val launches: List<com.example.spaceexplorer.domain.model.Launch>,
+    private val onItemClick: (com.example.spaceexplorer.domain.model.Launch) -> Unit
 ) : RecyclerView.Adapter<LaunchAdapter.LaunchViewHolder>() {
 
     inner class LaunchViewHolder(private val binding: ItemLaunchBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(launch: Launch) {
+        fun bind(launch: com.example.spaceexplorer.domain.model.Launch) {
 
             binding.tvMissionName.text = launch.missionName
 

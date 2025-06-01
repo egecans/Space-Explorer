@@ -16,19 +16,19 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideGetLaunchesUseCase(repository: LaunchRepository): GetLaunchesUseCase {
-        return GetLaunchesUseCase(repository)
+    fun provideGetLaunchesUseCase(repository: com.example.spaceexplorer.domain.repository.LaunchRepository): com.example.spaceexplorer.domain.usecase.GetLaunchesUseCase {
+        return com.example.spaceexplorer.domain.usecase.GetLaunchesUseCase(repository)
     }
 
     @Provides
     @Singleton
-    fun provideGetLaunchByIdUseCase(repository: LaunchRepository): GetLaunchByIdUseCase {
-        return GetLaunchByIdUseCase(repository)
+    fun provideGetLaunchByIdUseCase(repository: com.example.spaceexplorer.domain.repository.LaunchRepository): com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase {
+        return com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase(repository)
     }
 
     @Provides
     @Singleton
-    fun provideGetRocketByIdUseCase(repository: LaunchRepository): GetRocketByIdUseCase {
-        return GetRocketByIdUseCase(repository)
+    fun provideGetRocketByIdUseCase(repository: com.example.spaceexplorer.domain.repository.LaunchRepository): com.example.spaceexplorer.domain.usecase.GetRocketByIdUseCase {
+        return com.example.spaceexplorer.domain.usecase.GetRocketByIdUseCase(repository)
     }
 }

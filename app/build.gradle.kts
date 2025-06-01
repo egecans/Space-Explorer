@@ -46,6 +46,10 @@ android {
 }
 
 dependencies {
+    // Project modules
+    implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":common"))
     // Core AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -98,4 +102,6 @@ dependencies {
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    testImplementation("org.robolectric:robolectric:4.10.3") // For unit testing with Robolectric to hinder error because of logs
 }

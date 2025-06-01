@@ -1,20 +1,31 @@
 package com.example.spaceexplorer.di
 
+import android.content.Context
+import com.example.spaceexplorer.common.NetworkChecker
+import com.example.spaceexplorer.data.api.SpaceXApiService
+import com.example.spaceexplorer.data.db.SpaceExplorerDatabase
 import com.example.spaceexplorer.data.repository.LaunchRepositoryImpl
 import com.example.spaceexplorer.domain.repository.LaunchRepository
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
+object RepositoryModule {
 
-    @Binds
+    @Provides
     @Singleton
-    abstract fun bindLaunchRepository(
-        launchRepositoryImpl: LaunchRepositoryImpl
-    ): LaunchRepository
+    fun provideLaunchRepository(
+        apiService: SpaceXApiService,
+        database: SpaceExplorerDatabase,
+        @ApplicationContext context: Context,
+        networkChecker: NetworkChecker
+    ): LaunchRepository {
+        return LaunchRepositoryImpl(apiService, database, context, networkChecker)
+    }
 }

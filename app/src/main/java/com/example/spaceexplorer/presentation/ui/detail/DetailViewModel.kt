@@ -20,8 +20,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val getLaunchByIdUseCase: GetLaunchByIdUseCase,
-    private val getRocketByIdUseCase: GetRocketByIdUseCase,
+    private val getLaunchByIdUseCase: com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase,
+    private val getRocketByIdUseCase: com.example.spaceexplorer.domain.usecase.GetRocketByIdUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
