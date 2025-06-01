@@ -2,6 +2,7 @@ package com.example.spaceexplorer.presentation.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.spaceexplorer.common.error.NoInternetException
 import com.example.spaceexplorer.domain.usecase.GetLaunchesUseCase
 import com.example.spaceexplorer.presentation.model.LaunchesUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,11 +26,16 @@ class HomeViewModel @Inject constructor(
         fetchLaunches()
     }
 
-    private fun fetchLaunches() {
+    fun fetchLaunches() {
         viewModelScope.launch {
             getLaunchesUseCase()
                 .onStart { _uiState.value = LaunchesUiState.Loading }
-                .catch { e -> _uiState.value = LaunchesUiState.Error(e.message ?: "Unknown error") }
+                .catch { e ->
+                    _uiState.value = when (e) {
+                        is NoInternetException -> LaunchesUiState.NoInternetConnection
+                        else -> LaunchesUiState.Error(e.message ?: "Unknown error")
+                    }
+                }
                 .collect { launches -> _uiState.value = LaunchesUiState.Success(launches) }
         }
     }

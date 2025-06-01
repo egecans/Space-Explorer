@@ -11,4 +11,7 @@ sealed class LaunchesUiState {
     data object Loading : LaunchesUiState()
     data class Success(val launches: List<Launch>) : LaunchesUiState()
     data class Error(val message: String) : LaunchesUiState()
+
+    // Specific error for no internet
+    data object NoInternetConnection : LaunchesUiState()
 }

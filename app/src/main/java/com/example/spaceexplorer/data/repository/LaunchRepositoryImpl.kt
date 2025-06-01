@@ -1,10 +1,14 @@
 package com.example.spaceexplorer.data.repository
 
+import android.content.Context
+import com.example.spaceexplorer.common.NetworkUtils
+import com.example.spaceexplorer.common.error.NoInternetException
 import com.example.spaceexplorer.data.api.SpaceXApiService
 import com.example.spaceexplorer.data.mapper.toDomain
 import com.example.spaceexplorer.domain.model.Launch
 import com.example.spaceexplorer.domain.model.Rocket
 import com.example.spaceexplorer.domain.repository.LaunchRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -21,7 +25,8 @@ import javax.inject.Inject
  * and this implementation depends on data-layer classes.
  */
 class LaunchRepositoryImpl @Inject constructor(
-    private val apiService: SpaceXApiService
+    private val apiService: SpaceXApiService,
+    @ApplicationContext private val context: Context
 ) : LaunchRepository {
 
     /**
@@ -29,6 +34,12 @@ class LaunchRepositoryImpl @Inject constructor(
      * combines them into domain [Launch] models with rocket names.
      */
     override fun getLaunches(): Flow<List<Launch>> = flow {
+
+        // check Internet connection at first
+        if (!NetworkUtils.isNetworkAvailable(context)) {
+            throw NoInternetException("No internet connection")
+        }
+
         val launchesDto = apiService.getLaunches()
         val rocketsDto = apiService.getRockets()
 

@@ -1,5 +1,6 @@
 package com.example.spaceexplorer.presentation.ui.home
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -84,9 +85,22 @@ class HomeFragment : Fragment() {
                         binding.tvErrorMessage.visibility = View.VISIBLE
                         binding.tvErrorMessage.text = state.message
                     }
+                    is LaunchesUiState.NoInternetConnection -> {
+                        showNoInternetDialog("No internet connection. Please try again.")
+                    }
                 }
             }
         }
+    }
+
+    private fun showNoInternetDialog(message: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Connection Error")
+            .setMessage(message)
+            .setNegativeButton("Cancel") { dialog,  _ ->
+               dialog.dismiss()
+            }
+            .show()
     }
 
     override fun onDestroyView() {
