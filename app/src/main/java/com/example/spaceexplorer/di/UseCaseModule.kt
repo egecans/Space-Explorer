@@ -3,6 +3,7 @@ package com.example.spaceexplorer.di
 import com.example.spaceexplorer.domain.repository.LaunchRepository
 import com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase
 import com.example.spaceexplorer.domain.usecase.GetLaunchesUseCase
+import com.example.spaceexplorer.domain.usecase.GetRocketByIdUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,5 +24,11 @@ object UseCaseModule {
     @Singleton
     fun provideGetLaunchByIdUseCase(repository: LaunchRepository): GetLaunchByIdUseCase {
         return GetLaunchByIdUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetRocketByIdUseCase(repository: LaunchRepository): GetRocketByIdUseCase {
+        return GetRocketByIdUseCase(repository)
     }
 }

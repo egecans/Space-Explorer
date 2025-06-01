@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase
+import com.example.spaceexplorer.domain.usecase.GetRocketByIdUseCase
 import com.example.spaceexplorer.presentation.model.LaunchDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val getLaunchByIdUseCase: GetLaunchByIdUseCase,
+    private val getRocketByIdUseCase: GetRocketByIdUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -50,7 +52,12 @@ class DetailViewModel @Inject constructor(
                 _uiState.value = LaunchDetailUiState.Loading
                 val launch = getLaunchByIdUseCase(id)
                 if (launch != null) {
-                    _uiState.value = LaunchDetailUiState.Success(launch)
+                    val rocket = getRocketByIdUseCase(launch.rocketId)
+                    if (rocket == null) {
+                        _uiState.value = LaunchDetailUiState.Error("Rocket not found")
+                        return@launch
+                    }
+                    _uiState.value = LaunchDetailUiState.Success(launch, rocket)
                 } else {
                     _uiState.value = LaunchDetailUiState.Error("Launch not found")
                 }

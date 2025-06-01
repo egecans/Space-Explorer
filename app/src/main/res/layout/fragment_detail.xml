@@ -1,78 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/detail_fragment_root"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvError"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_red_dark"
-        android:text="Error loading launch details"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"/>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/contentGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="tvMissionName,tvLaunchDate,tvRocketName,tvSuccessStatus"/>
+        <TextView
+            android:id="@+id/tvError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:text="Error loading launch details"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-    <TextView
-        android:id="@+id/tvMissionName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Mission Name"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <!-- Content group for the info rows -->
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/contentGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="labelMissionName,valueMissionName,labelLaunchDate,valueLaunchDate,labelRocketName,valueRocketName,labelRocketDesc,valueRocketDesc,labelSuccess,valueSuccess,labelWebcast,valueWebcast,labelArticle,valueArticle,labelWiki,valueWiki"/>
 
-    <TextView
-        android:id="@+id/tvLaunchDate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Launch Date"
-        app:layout_constraintTop_toBottomOf="@id/tvMissionName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
+        <!-- Rows with label on left, value on right -->
 
-    <TextView
-        android:id="@+id/tvRocketName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Rocket Name"
-        app:layout_constraintTop_toBottomOf="@id/tvLaunchDate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
+        <!-- Mission Name -->
+        <TextView
+            android:id="@+id/labelMissionName"
+            style="@style/LabelText"
+            android:text="Mission Name:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/tvSuccessStatus"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Success Status"
-        app:layout_constraintTop_toBottomOf="@id/tvRocketName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/valueMissionName"
+            style="@style/ValueText"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/labelMissionName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelMissionName" />
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/dividerColor"
+            app:layout_constraintTop_toBottomOf="@id/valueMissionName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <!-- Launch Date -->
+        <TextView
+            android:id="@+id/labelLaunchDate"
+            style="@style/LabelText"
+            android:text="Launch Date:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider1"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/valueLaunchDate"
+            style="@style/ValueText"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/labelLaunchDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelLaunchDate" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/dividerColor"
+            app:layout_constraintTop_toBottomOf="@id/valueLaunchDate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <!-- Rocket Name -->
+        <TextView
+            android:id="@+id/labelRocketName"
+            style="@style/LabelText"
+            android:text="Rocket Name:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider2"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/valueRocketName"
+            style="@style/ValueText"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/labelRocketName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelRocketName" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/dividerColor"
+            app:layout_constraintTop_toBottomOf="@id/valueRocketName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <!-- Rocket Description -->
+        <TextView
+            android:id="@+id/labelRocketDesc"
+            style="@style/LabelText"
+            android:text="Rocket Description:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider3"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/valueRocketDesc"
+            style="@style/ValueText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="20"
+            app:layout_constraintStart_toEndOf="@id/labelRocketDesc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/labelRocketDesc" />
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/dividerColor"
+            app:layout_constraintTop_toBottomOf="@id/valueRocketDesc"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <!-- Success -->
+        <TextView
+            android:id="@+id/labelSuccess"
+            style="@style/LabelText"
+            android:text="Success:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider4"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/valueSuccess"
+            style="@style/ValueText"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/labelSuccess"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelSuccess" />
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/dividerColor"
+            app:layout_constraintTop_toBottomOf="@id/valueSuccess"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <!-- Webcast -->
+        <TextView
+            android:id="@+id/labelWebcast"
+            style="@style/LabelText"
+            android:text="Webcast:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider5"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/valueWebcast"
+            style="@style/LinkText"
+            android:text="Link to Webcast"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/linkColor"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/labelWebcast"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelWebcast" />
+
+        <View
+            android:id="@+id/divider6"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/dividerColor"
+            app:layout_constraintTop_toBottomOf="@id/valueWebcast"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <!-- Article -->
+        <TextView
+            android:id="@+id/labelArticle"
+            style="@style/LabelText"
+            android:text="Article:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider6"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/valueArticle"
+            style="@style/LinkText"
+            android:text="Link to Article"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/linkColor"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/labelArticle"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelArticle"
+            />
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/dividerColor"
+            app:layout_constraintTop_toBottomOf="@id/valueArticle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <!-- Wikipedia -->
+        <TextView
+            android:id="@+id/labelWiki"
+            style="@style/LabelText"
+            android:text="Wikipedia:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider7"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/valueWiki"
+            style="@style/LinkText"
+            android:text="Link to Wikipedia"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/linkColor"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/labelWiki"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelWiki"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

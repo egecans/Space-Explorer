@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="labelColor">#333333</color>
+    <color name="valueColor">#555555</color>
+    <color name="linkColor">#1a73e8</color> <!-- nice blue for links -->
+    <color name="dividerColor">#555555</color>
 </resources>
