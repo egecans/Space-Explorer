@@ -2,8 +2,6 @@ package com.example.spaceexplorer.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.spaceexplorer.data.db.LaunchDao
-import com.example.spaceexplorer.data.db.SpaceExplorerDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
