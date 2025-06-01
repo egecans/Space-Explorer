@@ -53,9 +53,6 @@ class HomeFragment : Fragment() {
         }
         binding.rvLaunches.apply {
             adapter = this@HomeFragment.adapter
-            addItemDecoration(
-                DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-            )
         }
     }
 

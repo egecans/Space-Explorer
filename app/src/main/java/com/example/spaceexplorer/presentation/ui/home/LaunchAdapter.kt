@@ -3,7 +3,9 @@ package com.example.spaceexplorer.presentation.ui.home
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spaceexplorer.R
 import com.example.spaceexplorer.databinding.ItemLaunchBinding
 import com.example.spaceexplorer.domain.model.Launch
 
@@ -29,24 +31,25 @@ class LaunchAdapter(
 
             binding.tvRocketName.text = launch.rocketName
 
+
             // Success/Failure text + color
             when (launch.success) {
                 true -> {
                     binding.tvSuccessStatus.text = "Success"
                     binding.tvSuccessStatus.setTextColor(
-                        binding.root.context.getColor(android.R.color.holo_green_dark)
+                        binding.root.context.getColor(R.color.spacex_green)
                     )
                 }
                 false -> {
                     binding.tvSuccessStatus.text = "Failure"
                     binding.tvSuccessStatus.setTextColor(
-                        binding.root.context.getColor(android.R.color.holo_red_dark)
+                        binding.root.context.getColor(R.color.spacex_red)
                     )
                 }
                 null -> {
                     binding.tvSuccessStatus.text = "Unknown"
                     binding.tvSuccessStatus.setTextColor(
-                        binding.root.context.getColor(android.R.color.darker_gray)
+                        binding.root.context.getColor(R.color.spacex_light_gray)
                     )
                 }
             }

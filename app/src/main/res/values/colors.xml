@@ -6,4 +6,13 @@
     <color name="valueColor">#555555</color>
     <color name="linkColor">#1a73e8</color> <!-- nice blue for links -->
     <color name="dividerColor">#555555</color>
+    <color name="cardBackground">#EFB99B</color>
+    <color name="topNavBarColor">#A5C8F4</color>
+
+    <color name="spacex_black">#0A0A0A</color>        <!-- Very dark almost black -->
+    <color name="spacex_dark_gray">#1C1C1C</color>   <!-- Dark gray for card background -->
+    <color name="spacex_white">#F5F5F5</color>       <!-- Near white for text -->
+    <color name="spacex_light_gray">#E0E0E0</color>  <!-- Light gray for subtle text or dividers -->
+    <color name="spacex_green">#4CAF50</color>       <!-- Green for success -->
+    <color name="spacex_red">#F44336</color>         <!-- Red for failure -->
 </resources>
