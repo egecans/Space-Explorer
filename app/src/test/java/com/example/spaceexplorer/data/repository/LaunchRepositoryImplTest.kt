@@ -1,5 +1,8 @@
 package com.example.spaceexplorer.data.repository
 
+import android.content.Context
+import com.example.spaceexplorer.common.NetworkUtils
+import com.example.spaceexplorer.common.error.NoInternetException
 import com.example.spaceexplorer.data.api.SpaceXApiService
 import com.example.spaceexplorer.data.model.LaunchDto
 import com.example.spaceexplorer.data.model.LinksDto
@@ -11,20 +14,29 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mock
+import org.mockito.Mockito.mockStatic
+import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LaunchRepositoryImplTest {
 
+    @Mock
     private lateinit var apiService: SpaceXApiService
+
+    @Mock
+    private lateinit var context: Context
+
     private lateinit var repository: LaunchRepositoryImpl
 
     @Before
     fun setup() {
-        apiService = mock()
-        repository = LaunchRepositoryImpl(apiService)
+        MockitoAnnotations.openMocks(this)
+        repository = LaunchRepositoryImpl(apiService, context)
     }
 
+    // Need to add network util to di, to not give error
     @Test
     fun `getLaunches returns mapped launches`() = runTest {
         val rocketDto = RocketDto("rocket1", "Falcon 9", "Description of Falcon 9")
@@ -91,4 +103,5 @@ class LaunchRepositoryImplTest {
         assertEquals("Falcon 9", rocket?.name)
         assertEquals("Description of Falcon 9", rocket?.description)
     }
+
 }

@@ -1,34 +1,40 @@
 package com.example.spaceexplorer.presentation.ui.detail
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import com.example.spaceexplorer.domain.model.Launch
+import com.example.spaceexplorer.domain.model.Rocket
 import com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase
+import com.example.spaceexplorer.domain.usecase.GetRocketByIdUseCase
 import com.example.spaceexplorer.presentation.model.LaunchDetailUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.*
-import org.junit.After
-import org.junit.Assert.*
-import org.junit.Before
-import org.junit.Test
+import org.junit.*
+import org.junit.rules.TestRule
 import org.mockito.kotlin.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class DetailViewModelTest {
 
+    // Ensures LiveData / coroutines run synchronously in tests
+    @get:Rule
+    val instantExecutorRule: TestRule = InstantTaskExecutorRule()
+
     private val testDispatcher = StandardTestDispatcher()
 
     private lateinit var getLaunchByIdUseCase: GetLaunchByIdUseCase
+    private lateinit var getRocketByIdUseCase: GetRocketByIdUseCase
     private lateinit var savedStateHandle: SavedStateHandle
     private lateinit var viewModel: DetailViewModel
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
+
         getLaunchByIdUseCase = mock()
-        savedStateHandle = SavedStateHandle(mapOf("launchId" to "id1"))
+        getRocketByIdUseCase = mock()
     }
 
     @After
@@ -37,41 +43,101 @@ class DetailViewModelTest {
     }
 
     @Test
-    fun `fetchLaunchDetail emits Loading and Success states`() = runTest {
-        val launch = Launch("id1", "Mission 1", "2024-01-01T00:00:00Z", "r1", "Rocket 1", true, null, null, null)
-        whenever(getLaunchByIdUseCase.invoke("id1")).thenReturn(launch)
+    fun `init with null launchId sets Error state`() = runTest {
+        savedStateHandle = SavedStateHandle() // no launchId
+        viewModel = DetailViewModel(getLaunchByIdUseCase, getRocketByIdUseCase, savedStateHandle)
 
-        viewModel = DetailViewModel(getLaunchByIdUseCase, savedStateHandle)
-
-        val states = mutableListOf<LaunchDetailUiState>()
-        val job = launch {
-            viewModel.uiState.toList(states)
-        }
-
-        testDispatcher.scheduler.advanceUntilIdle()
-
-        assertEquals(LaunchDetailUiState.Loading, states[0])
-        assertEquals(LaunchDetailUiState.Success(launch), states[1])
-
-        job.cancel()
+        val state = viewModel.uiState.first()
+        Assert.assertTrue(state is LaunchDetailUiState.Error)
+        Assert.assertEquals("No launch ID provided", (state as LaunchDetailUiState.Error).message)
     }
 
     @Test
-    fun `fetchLaunchDetail emits Error when launch not found`() = runTest {
-        whenever(getLaunchByIdUseCase.invoke("id1")).thenReturn(null)
+    fun `fetchLaunchDetail sets Success state when launch and rocket found`() = runTest {
+        val launch = Launch(
+            id = "launch1",
+            missionName = "Test Mission",
+            launchDateUtc = "2024-01-01T00:00:00Z",
+            rocketId = "rocket1",
+            rocketName = "Test Rocket",
+            success = true,
+            webcastUrl = null,
+            articleUrl = null,
+            wikipediaUrl = null
+        )
+        val rocket = Rocket(
+            id = "rocket1",
+            name = "Test Rocket",
+            description = "Test Description"
+        )
 
-        viewModel = DetailViewModel(getLaunchByIdUseCase, savedStateHandle)
+        whenever(getLaunchByIdUseCase.invoke("launch1")).thenReturn(launch)
+        whenever(getRocketByIdUseCase.invoke("rocket1")).thenReturn(rocket)
 
-        val states = mutableListOf<LaunchDetailUiState>()
-        val job = launch {
-            viewModel.uiState.toList(states)
-        }
+        savedStateHandle = SavedStateHandle(mapOf("launchId" to "launch1"))
+        viewModel = DetailViewModel(getLaunchByIdUseCase, getRocketByIdUseCase, savedStateHandle)
 
-        testDispatcher.scheduler.advanceUntilIdle()
+        // Advance coroutines to process fetch
+        testScheduler.advanceUntilIdle()
 
-        assertEquals(LaunchDetailUiState.Loading, states[0])
-        assertTrue(states[1] is LaunchDetailUiState.Error)
+        val state = viewModel.uiState.value
+        Assert.assertTrue(state is LaunchDetailUiState.Success)
+        val successState = state as LaunchDetailUiState.Success
+        Assert.assertEquals(launch, successState.launch)
+        Assert.assertEquals(rocket, successState.rocket)
+    }
 
-        job.cancel()
+    @Test
+    fun `fetchLaunchDetail sets Error state when launch not found`() = runTest {
+        whenever(getLaunchByIdUseCase.invoke("launch1")).thenReturn(null)
+
+        savedStateHandle = SavedStateHandle(mapOf("launchId" to "launch1"))
+        viewModel = DetailViewModel(getLaunchByIdUseCase, getRocketByIdUseCase, savedStateHandle)
+
+        testScheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        Assert.assertTrue(state is LaunchDetailUiState.Error)
+        Assert.assertEquals("Launch not found", (state as LaunchDetailUiState.Error).message)
+    }
+
+    @Test
+    fun `fetchLaunchDetail sets Error state when rocket not found`() = runTest {
+        val launch = Launch(
+            id = "launch1",
+            missionName = "Test Mission",
+            launchDateUtc = "2024-01-01T00:00:00Z",
+            rocketId = "rocket1",
+            rocketName = "Test Rocket",
+            success = true,
+            webcastUrl = null,
+            articleUrl = null,
+            wikipediaUrl = null
+        )
+        whenever(getLaunchByIdUseCase.invoke("launch1")).thenReturn(launch)
+        whenever(getRocketByIdUseCase.invoke("rocket1")).thenReturn(null)
+
+        savedStateHandle = SavedStateHandle(mapOf("launchId" to "launch1"))
+        viewModel = DetailViewModel(getLaunchByIdUseCase, getRocketByIdUseCase, savedStateHandle)
+
+        testScheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        Assert.assertTrue(state is LaunchDetailUiState.Error)
+        Assert.assertEquals("Rocket not found", (state as LaunchDetailUiState.Error).message)
+    }
+
+    @Test
+    fun `fetchLaunchDetail sets Error state on exception`() = runTest {
+        whenever(getLaunchByIdUseCase.invoke("launch1")).thenThrow(RuntimeException("Test exception"))
+
+        savedStateHandle = SavedStateHandle(mapOf("launchId" to "launch1"))
+        viewModel = DetailViewModel(getLaunchByIdUseCase, getRocketByIdUseCase, savedStateHandle)
+
+        testScheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        Assert.assertTrue(state is LaunchDetailUiState.Error)
+        Assert.assertEquals("Test exception", (state as LaunchDetailUiState.Error).message)
     }
 }
