@@ -23,7 +23,7 @@ class HomeViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
 
-    private lateinit var getLaunchesUseCase: GetLaunchesUseCase
+    private lateinit var getLaunchesUseCase: com.example.spaceexplorer.domain.usecase.GetLaunchesUseCase
     private lateinit var viewModel: HomeViewModel
 
     @Before
@@ -40,7 +40,17 @@ class HomeViewModelTest {
     @Test
     fun `fetchLaunches emits Success state`() = runTest {
         val launches = listOf(
-            Launch("id1", "Mission 1", "2024-01-01T00:00:00Z", "r1", "Rocket 1", true, null, null, null)
+            com.example.spaceexplorer.domain.model.Launch(
+                "id1",
+                "Mission 1",
+                "2024-01-01T00:00:00Z",
+                "r1",
+                "Rocket 1",
+                true,
+                null,
+                null,
+                null
+            )
         )
         whenever(getLaunchesUseCase()).thenReturn(flow { emit(launches) })
 

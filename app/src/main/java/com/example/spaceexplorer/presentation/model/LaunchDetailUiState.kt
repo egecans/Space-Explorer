@@ -10,6 +10,6 @@ import com.example.spaceexplorer.domain.model.Rocket
  */
 sealed class LaunchDetailUiState {
     data object Loading : LaunchDetailUiState()
-    data class Success(val launch: Launch, val rocket: Rocket) : LaunchDetailUiState()
+    data class Success(val launch: com.example.spaceexplorer.domain.model.Launch, val rocket: com.example.spaceexplorer.domain.model.Rocket) : LaunchDetailUiState()
     data class Error(val message: String) : LaunchDetailUiState()
 }

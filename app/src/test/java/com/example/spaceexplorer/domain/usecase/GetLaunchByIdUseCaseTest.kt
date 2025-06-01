@@ -15,18 +15,28 @@ import org.mockito.kotlin.whenever
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetLaunchByIdUseCaseTest {
 
-    private lateinit var repository: LaunchRepository
-    private lateinit var useCase: GetLaunchByIdUseCase
+    private lateinit var repository: com.example.spaceexplorer.domain.repository.LaunchRepository
+    private lateinit var useCase: com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase
 
     @Before
     fun setup() {
         repository = mock()
-        useCase = GetLaunchByIdUseCase(repository)
+        useCase = com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase(repository)
     }
 
     @Test
     fun `invoke returns launch when found`() = runTest {
-        val launch = Launch("id1", "Mission 1", "2024-01-01T00:00:00Z", "r1", "Rocket 1", true, null, null, null)
+        val launch = com.example.spaceexplorer.domain.model.Launch(
+            "id1",
+            "Mission 1",
+            "2024-01-01T00:00:00Z",
+            "r1",
+            "Rocket 1",
+            true,
+            null,
+            null,
+            null
+        )
         whenever(repository.getLaunchById("id1")).thenReturn(launch)
 
         val result = useCase("id1")

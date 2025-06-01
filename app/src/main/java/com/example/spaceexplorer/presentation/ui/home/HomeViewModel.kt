@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getLaunchesUseCase: GetLaunchesUseCase
+    private val getLaunchesUseCase: com.example.spaceexplorer.domain.usecase.GetLaunchesUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<LaunchesUiState>(LaunchesUiState.Loading)

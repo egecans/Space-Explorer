@@ -24,8 +24,8 @@ class DetailViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
 
-    private lateinit var getLaunchByIdUseCase: GetLaunchByIdUseCase
-    private lateinit var getRocketByIdUseCase: GetRocketByIdUseCase
+    private lateinit var getLaunchByIdUseCase: com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase
+    private lateinit var getRocketByIdUseCase: com.example.spaceexplorer.domain.usecase.GetRocketByIdUseCase
     private lateinit var savedStateHandle: SavedStateHandle
     private lateinit var viewModel: DetailViewModel
 
@@ -54,7 +54,7 @@ class DetailViewModelTest {
 
     @Test
     fun `fetchLaunchDetail sets Success state when launch and rocket found`() = runTest {
-        val launch = Launch(
+        val launch = com.example.spaceexplorer.domain.model.Launch(
             id = "launch1",
             missionName = "Test Mission",
             launchDateUtc = "2024-01-01T00:00:00Z",
@@ -65,7 +65,7 @@ class DetailViewModelTest {
             articleUrl = null,
             wikipediaUrl = null
         )
-        val rocket = Rocket(
+        val rocket = com.example.spaceexplorer.domain.model.Rocket(
             id = "rocket1",
             name = "Test Rocket",
             description = "Test Description"
@@ -103,7 +103,7 @@ class DetailViewModelTest {
 
     @Test
     fun `fetchLaunchDetail sets Error state when rocket not found`() = runTest {
-        val launch = Launch(
+        val launch = com.example.spaceexplorer.domain.model.Launch(
             id = "launch1",
             missionName = "Test Mission",
             launchDateUtc = "2024-01-01T00:00:00Z",

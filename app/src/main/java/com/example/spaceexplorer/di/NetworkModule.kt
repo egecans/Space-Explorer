@@ -42,6 +42,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideSpaceXApiService(retrofit: Retrofit): SpaceXApiService =
-        retrofit.create(SpaceXApiService::class.java)
+    fun provideSpaceXApiService(retrofit: Retrofit): com.example.spaceexplorer.data.api.SpaceXApiService =
+        retrofit.create(com.example.spaceexplorer.data.api.SpaceXApiService::class.java)
 }

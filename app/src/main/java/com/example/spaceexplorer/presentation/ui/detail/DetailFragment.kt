@@ -84,7 +84,7 @@ class DetailFragment : Fragment() {
     /**
      * Binds launch details to the UI views.
      */
-    private fun bindLaunchDetails(launch: Launch, rocket: Rocket) {
+    private fun bindLaunchDetails(launch: com.example.spaceexplorer.domain.model.Launch, rocket: com.example.spaceexplorer.domain.model.Rocket) {
         binding.valueMissionName.text = launch.missionName
         binding.valueLaunchDate.text = launch.launchDateUtc.replace('T', ' ').take(19) // Format e.g. 2006-03-24 22:30:00
         binding.valueRocketName.text = rocket.name

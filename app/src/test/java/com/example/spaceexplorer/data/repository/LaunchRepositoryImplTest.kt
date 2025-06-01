@@ -1,8 +1,6 @@
 package com.example.spaceexplorer.data.repository
 
 import android.content.Context
-import com.example.spaceexplorer.common.NetworkUtils
-import com.example.spaceexplorer.common.error.NoInternetException
 import com.example.spaceexplorer.data.api.SpaceXApiService
 import com.example.spaceexplorer.data.model.LaunchDto
 import com.example.spaceexplorer.data.model.LinksDto
@@ -15,7 +13,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.mockStatic
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.*
 
@@ -23,30 +20,35 @@ import org.mockito.kotlin.*
 class LaunchRepositoryImplTest {
 
     @Mock
-    private lateinit var apiService: SpaceXApiService
+    private lateinit var apiService: com.example.spaceexplorer.data.api.SpaceXApiService
 
     @Mock
     private lateinit var context: Context
 
-    private lateinit var repository: LaunchRepositoryImpl
+    private lateinit var repository: com.example.spaceexplorer.data.repository.LaunchRepositoryImpl
 
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        repository = LaunchRepositoryImpl(apiService, context)
+        repository =
+            com.example.spaceexplorer.data.repository.LaunchRepositoryImpl(apiService, context)
     }
 
     // Need to add network util to di, to not give error
     @Test
     fun `getLaunches returns mapped launches`() = runTest {
-        val rocketDto = RocketDto("rocket1", "Falcon 9", "Description of Falcon 9")
-        val launchDto = LaunchDto(
+        val rocketDto = com.example.spaceexplorer.data.model.RocketDto(
+            "rocket1",
+            "Falcon 9",
+            "Description of Falcon 9"
+        )
+        val launchDto = com.example.spaceexplorer.data.model.LaunchDto(
             id = "launch1",
             name = "Starlink Mission",
             dateUtc = "2024-01-01T00:00:00Z",
             rocket = "rocket1",
             success = true,
-            links = LinksDto(
+            links = com.example.spaceexplorer.data.model.LinksDto(
                 webcast = "https://youtube.com/test",
                 article = "https://article.com/test",
                 wikipedia = "https://wikipedia.org/test"
@@ -68,14 +70,18 @@ class LaunchRepositoryImplTest {
 
     @Test
     fun `getLaunchById returns launch with rocket name`() = runTest {
-        val rocketDto = RocketDto("rocket1", "Falcon 9", "Description of Falcon 9")
-        val launchDto = LaunchDto(
+        val rocketDto = com.example.spaceexplorer.data.model.RocketDto(
+            "rocket1",
+            "Falcon 9",
+            "Description of Falcon 9"
+        )
+        val launchDto = com.example.spaceexplorer.data.model.LaunchDto(
             id = "launch1",
             name = "Starlink Mission",
             dateUtc = "2024-01-01T00:00:00Z",
             rocket = "rocket1",
             success = true,
-            links = LinksDto(
+            links = com.example.spaceexplorer.data.model.LinksDto(
                 webcast = "https://youtube.com/test",
                 article = "https://article.com/test",
                 wikipedia = "https://wikipedia.org/test"
@@ -93,7 +99,11 @@ class LaunchRepositoryImplTest {
 
     @Test
     fun `getRocketById returns mapped rocket`() = runTest {
-        val rocketDto = RocketDto("rocket1", "Falcon 9", "Description of Falcon 9")
+        val rocketDto = com.example.spaceexplorer.data.model.RocketDto(
+            "rocket1",
+            "Falcon 9",
+            "Description of Falcon 9"
+        )
 
         whenever(apiService.getRocketById("rocket1")).thenReturn(rocketDto)
 

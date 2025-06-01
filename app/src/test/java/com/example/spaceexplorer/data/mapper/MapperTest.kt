@@ -12,7 +12,7 @@ class MapperTest {
 
     @Test
     fun `rocketDto toDomain maps correctly`() {
-        val rocketDto = RocketDto(
+        val rocketDto = com.example.spaceexplorer.data.model.RocketDto(
             id = "rocket123",
             name = "Falcon 1",
             description = "Test description"
@@ -27,13 +27,13 @@ class MapperTest {
 
     @Test
     fun `launchDto toDomain maps correctly with rocketName`() {
-        val launchDto = LaunchDto(
+        val launchDto = com.example.spaceexplorer.data.model.LaunchDto(
             id = "launch123",
             name = "Mission 1",
             dateUtc = "2023-01-01T00:00:00Z",
             rocket = "rocket123",
             success = true,
-            links = LinksDto(
+            links = com.example.spaceexplorer.data.model.LinksDto(
                 webcast = "https://youtube.com/test",
                 article = "https://article.com/test",
                 wikipedia = "https://wikipedia.org/test"

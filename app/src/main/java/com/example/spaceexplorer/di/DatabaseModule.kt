@@ -17,11 +17,11 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): SpaceExplorerDatabase =
-        Room.databaseBuilder(context, SpaceExplorerDatabase::class.java, "space_explorer_db")
+    fun provideDatabase(@ApplicationContext context: Context): com.example.spaceexplorer.data.db.SpaceExplorerDatabase =
+        Room.databaseBuilder(context, com.example.spaceexplorer.data.db.SpaceExplorerDatabase::class.java, "space_explorer_db")
             .fallbackToDestructiveMigration()
             .build()
 
     @Provides
-    fun provideLaunchDao(database: SpaceExplorerDatabase): LaunchDao = database.launchDao()
+    fun provideLaunchDao(database: com.example.spaceexplorer.data.db.SpaceExplorerDatabase): com.example.spaceexplorer.data.db.LaunchDao = database.launchDao()
 }

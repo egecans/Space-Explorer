@@ -12,18 +12,19 @@ import org.mockito.kotlin.*
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetRocketByIdUseCaseTest {
 
-    private lateinit var repository: LaunchRepository
-    private lateinit var useCase: GetRocketByIdUseCase
+    private lateinit var repository: com.example.spaceexplorer.domain.repository.LaunchRepository
+    private lateinit var useCase: com.example.spaceexplorer.domain.usecase.GetRocketByIdUseCase
 
     @Before
     fun setup() {
         repository = mock()
-        useCase = GetRocketByIdUseCase(repository)
+        useCase = com.example.spaceexplorer.domain.usecase.GetRocketByIdUseCase(repository)
     }
 
     @Test
     fun `invoke returns rocket from repository`() = runTest {
-        val rocket = Rocket("rocket1", "Falcon 9", "Description")
+        val rocket =
+            com.example.spaceexplorer.domain.model.Rocket("rocket1", "Falcon 9", "Description")
         whenever(repository.getRocketById("rocket1")).thenReturn(rocket)
 
         val result = useCase("rocket1")
