@@ -190,93 +190,132 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp" />
 
-        <!-- Webcast -->
-        <TextView
-            android:id="@+id/labelWebcast"
-            style="@style/LabelText"
-            android:text="Webcast:"
-            app:layout_constraintStart_toStartOf="parent"
+        <!-- Webcast group -->
+        <LinearLayout
+            android:id="@+id/layoutWebcastGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/divider5"
-            android:layout_marginTop="8dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp">
 
-        <TextView
-            android:id="@+id/valueWebcast"
-            style="@style/LinkText"
-            android:text="Link to Webcast"
-            android:clickable="true"
-            android:focusable="true"
-            android:textColor="@color/linkColor"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelWebcast"
+                    style="@style/LabelText"
+                    android:text="Webcast:" />
+
+                <TextView
+                    android:id="@+id/valueWebcast"
+                    style="@style/LinkText"
+                    android:text="Link to Webcast"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:textColor="@color/linkColor"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/dividerColor"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- Article group -->
+        <LinearLayout
+            android:id="@+id/layoutArticleGroup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/labelWebcast"
-            app:layout_constraintBaseline_toBaselineOf="@id/labelWebcast" />
-
-        <View
-            android:id="@+id/divider6"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/dividerColor"
-            app:layout_constraintTop_toBottomOf="@id/valueWebcast"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/layoutWebcastGroup"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp">
 
-        <!-- Article -->
-        <TextView
-            android:id="@+id/labelArticle"
-            style="@style/LabelText"
-            android:text="Article:"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider6"
-            android:layout_marginTop="8dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/valueArticle"
-            style="@style/LinkText"
-            android:text="Link to Article"
-            android:clickable="true"
-            android:focusable="true"
-            android:textColor="@color/linkColor"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/labelArticle"
+                    style="@style/LabelText"
+                    android:text="Article:" />
+
+                <TextView
+                    android:id="@+id/valueArticle"
+                    style="@style/LinkText"
+                    android:text="Link to Article"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:textColor="@color/linkColor"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/dividerColor"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- Wikipedia group -->
+        <LinearLayout
+            android:id="@+id/layoutWikiGroup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/labelArticle"
-            app:layout_constraintBaseline_toBaselineOf="@id/labelArticle"
-            />
-
-        <View
-            android:id="@+id/divider7"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/dividerColor"
-            app:layout_constraintTop_toBottomOf="@id/valueArticle"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/layoutArticleGroup"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp">
 
-        <!-- Wikipedia -->
-        <TextView
-            android:id="@+id/labelWiki"
-            style="@style/LabelText"
-            android:text="Wikipedia:"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider7"
-            android:layout_marginTop="8dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/valueWiki"
-            style="@style/LinkText"
-            android:text="Link to Wikipedia"
-            android:clickable="true"
-            android:focusable="true"
-            android:textColor="@color/linkColor"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/labelWiki"
-            app:layout_constraintBaseline_toBaselineOf="@id/labelWiki"
-            />
+                <TextView
+                    android:id="@+id/labelWiki"
+                    style="@style/LabelText"
+                    android:text="Wikipedia:" />
+
+                <TextView
+                    android:id="@+id/valueWiki"
+                    style="@style/LinkText"
+                    android:text="Link to Wikipedia"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:textColor="@color/linkColor"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider8"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/dividerColor"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

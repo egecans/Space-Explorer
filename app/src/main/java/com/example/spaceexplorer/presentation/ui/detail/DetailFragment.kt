@@ -95,25 +95,28 @@ class DetailFragment : Fragment() {
             false -> "Failure"
             null -> "Unknown"
         }
-
         // Set clickable links, show "N/A" if null or empty
-        setupLink(binding.valueWebcast, launch.webcastUrl, "Link to Webcast")
-        setupLink(binding.valueArticle, launch.articleUrl, "Link to Article")
-        setupLink(binding.valueWiki, launch.wikipediaUrl, "Link to Wikipedia")
+        toggleLinkGroup(binding.layoutWebcastGroup, binding.valueWebcast, launch.webcastUrl, "Link to Webcast")
+        toggleLinkGroup(binding.layoutArticleGroup, binding.valueArticle, launch.articleUrl, "Link to Article")
+        toggleLinkGroup(binding.layoutWikiGroup, binding.valueWiki, launch.wikipediaUrl, "Link to Wikipedia")
+
     }
 
+
     /**
-     * Helper function to set up a TextView as a clickable link.
-     * If the URL is null or empty, sets text to "N/A" and disables clickability.
+     * Shows or hides the entire link group container (label + value + divider).
+     * Sets up clickable link if URL is valid.
      */
-    private fun setupLink(textView: TextView, url: String?, label: String) {
+    private fun toggleLinkGroup(
+        container: ViewGroup,
+        textView: TextView,
+        url: String?,
+        label: String
+    ) {
         if (url.isNullOrBlank()) {
-            textView.text = "N/A"
-            textView.isClickable = false
-            textView.setTextColor(resources.getColor(R.color.valueColor))
-            textView.paintFlags = 0
-            textView.setOnClickListener(null)
+            container.visibility = View.GONE
         } else {
+            container.visibility = View.VISIBLE
             textView.text = label
             textView.isClickable = true
             textView.setTextColor(resources.getColor(R.color.linkColor))
