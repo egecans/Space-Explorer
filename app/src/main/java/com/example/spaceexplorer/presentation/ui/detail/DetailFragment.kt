@@ -1,6 +1,7 @@
 package com.example.spaceexplorer.presentation.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.spaceexplorer.databinding.FragmentDetailBinding
+import com.example.spaceexplorer.domain.model.Launch
 import com.example.spaceexplorer.presentation.model.LaunchDetailUiState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -70,7 +72,8 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun bindLaunchDetails(launch: com.example.spaceexplorer.domain.model.Launch) {
+    private fun bindLaunchDetails(launch: Launch) {
+        Log.i("DetailFragment", "bindLaunchDetails: $launch")
         binding.tvMissionName.text = launch.missionName
         binding.tvLaunchDate.text = launch.launchDateUtc.take(10) // format as yyyy-MM-dd
         binding.tvRocketName.text = launch.rocketName

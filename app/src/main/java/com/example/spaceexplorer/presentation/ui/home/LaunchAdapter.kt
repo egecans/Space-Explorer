@@ -1,5 +1,6 @@
 package com.example.spaceexplorer.presentation.ui.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ class LaunchAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(launch: Launch) {
+
             binding.tvMissionName.text = launch.missionName
 
             // Format launch date to user-friendly format if needed

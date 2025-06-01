@@ -1,12 +1,14 @@
 package com.example.spaceexplorer.presentation.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.spaceexplorer.databinding.FragmentHomeBinding
 import com.example.spaceexplorer.presentation.model.LaunchesUiState
@@ -45,12 +47,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = LaunchAdapter(emptyList()) { launch ->
+        adapter = LaunchAdapter(emptyList()) { _ ->
             // TODO: Handle item click, navigate to detail screen with launch.id
-            // For example:
-            // findNavController().navigate(HomeFragmentDirections.actionHomeToDetail(launch.id))
         }
-
         binding.rvLaunches.apply {
             adapter = this@HomeFragment.adapter
             addItemDecoration(
@@ -73,7 +72,9 @@ class HomeFragment : Fragment() {
                         binding.rvLaunches.visibility = View.VISIBLE
                         binding.tvErrorMessage.visibility = View.GONE
                         adapter = LaunchAdapter(state.launches) { launch ->
-                            // TODO: Handle item click, navigate to detail
+                            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(launch.id)
+                            Log.i("HomeFragment", "Navigating to detail with launch ID: ${launch.id}")
+                            findNavController().navigate(action)
                         }
                         binding.rvLaunches.adapter = adapter
                     }
