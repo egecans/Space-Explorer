@@ -1,5 +1,6 @@
 package com.example.spaceexplorer.presentation.ui.detail
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -40,8 +41,10 @@ class DetailViewModel @Inject constructor(
     init {
         val launchId = savedStateHandle.get<String>("launchId")
         if (launchId == null) {
+            Log.i("DetailViewModel", "No launch ID provided in saved state")
             _uiState.value = LaunchDetailUiState.Error("No launch ID provided")
         } else {
+            Log.i("DetailViewModel", "Fetching details for launch ID: $launchId")
             fetchLaunchDetail(launchId)
         }
     }
@@ -51,17 +54,22 @@ class DetailViewModel @Inject constructor(
             try {
                 _uiState.value = LaunchDetailUiState.Loading
                 val launch = getLaunchByIdUseCase(id)
+                Log.i("DetailViewModel", "Fetched launch: $launch")
                 if (launch != null) {
                     val rocket = getRocketByIdUseCase(launch.rocketId)
                     if (rocket == null) {
+                        Log.w("DetailViewModel", "Rocket not found for launch ID: ${launch.rocketId}")
                         _uiState.value = LaunchDetailUiState.Error("Rocket not found")
                         return@launch
                     }
+                    Log.i("DetailViewModel", "Fetched rocket: $rocket")
                     _uiState.value = LaunchDetailUiState.Success(launch, rocket)
                 } else {
+                    Log.w("DetailViewModel", "Launch not found for ID: $id")
                     _uiState.value = LaunchDetailUiState.Error("Launch not found")
                 }
             } catch (e: Exception) {
+                Log.e("DetailViewModel", "Error fetching launch detail", e)
                 _uiState.value = LaunchDetailUiState.Error(e.message ?: "Unknown error")
             }
         }

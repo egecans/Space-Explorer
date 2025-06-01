@@ -1,6 +1,7 @@
 package com.example.spaceexplorer.data.repository
 
 import android.content.Context
+import android.util.Log
 import com.example.spaceexplorer.common.NetworkUtils
 import com.example.spaceexplorer.common.error.NoInternetException
 import com.example.spaceexplorer.data.api.SpaceXApiService
@@ -44,12 +45,13 @@ class LaunchRepositoryImpl @Inject constructor(
         val rocketsDto = apiService.getRockets()
 
         val rocketMap = rocketsDto.associateBy { it.id } // RocketID, RocketDto
+        Log.i("LaunchRepository", "Fetched ${rocketsDto.size} rockets and mapped with ID")
 
         val launches = launchesDto.map { launchDto ->
             val rocketName = rocketMap[launchDto.rocket]?.name ?: "Unknown Rocket" // if rocket not found
             launchDto.toDomain(rocketName)
         }
-
+        Log.i("LaunchRepository", "Mapped ${launches.size} launches with rocket names")
         emit(launches)
     }
 

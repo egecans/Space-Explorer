@@ -3,13 +3,10 @@ package com.example.spaceexplorer.domain.usecase
 import com.example.spaceexplorer.domain.model.Rocket
 import com.example.spaceexplorer.domain.repository.LaunchRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import org.mockito.kotlin.*
 
 @OptIn(ExperimentalCoroutinesApi::class)

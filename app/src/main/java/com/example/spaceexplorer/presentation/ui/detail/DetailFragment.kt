@@ -31,9 +31,9 @@ class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
-
     private val args: DetailFragmentArgs by navArgs()
     private val viewModel: DetailViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +52,9 @@ class DetailFragment : Fragment() {
         observeUiState()
     }
 
+    /**
+     * Observes the UI state from ViewModel and updates the UI accordingly.
+     */
     private fun observeUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collectLatest { state ->
@@ -78,6 +81,9 @@ class DetailFragment : Fragment() {
         }
     }
 
+    /**
+     * Binds launch details to the UI views.
+     */
     private fun bindLaunchDetails(launch: Launch, rocket: Rocket) {
         binding.valueMissionName.text = launch.missionName
         binding.valueLaunchDate.text = launch.launchDateUtc.replace('T', ' ').take(19) // Format e.g. 2006-03-24 22:30:00
@@ -96,22 +102,10 @@ class DetailFragment : Fragment() {
         setupLink(binding.valueWiki, launch.wikipediaUrl, "Link to Wikipedia")
     }
 
-    private fun setupLink(textView: TextView, url: String?) {
-        if (url.isNullOrBlank()) {
-            textView.text = "N/A"
-            textView.isClickable = false
-            textView.setTextColor(resources.getColor(R.color.valueColor))
-        } else {
-            textView.text = url
-            textView.isClickable = true
-            textView.setTextColor(resources.getColor(R.color.linkColor))
-            textView.setOnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                startActivity(intent)
-            }
-        }
-    }
-
+    /**
+     * Helper function to set up a TextView as a clickable link.
+     * If the URL is null or empty, sets text to "N/A" and disables clickability.
+     */
     private fun setupLink(textView: TextView, url: String?, label: String) {
         if (url.isNullOrBlank()) {
             textView.text = "N/A"
@@ -130,8 +124,6 @@ class DetailFragment : Fragment() {
             }
         }
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
