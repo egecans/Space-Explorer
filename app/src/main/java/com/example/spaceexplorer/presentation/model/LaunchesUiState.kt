@@ -13,5 +13,5 @@ sealed class LaunchesUiState {
     data class Error(val message: String) : LaunchesUiState()
 
     // Specific error for no internet
-    data object NoInternetConnection : LaunchesUiState()
+    data class NoInternetConnection(val message: String)  : LaunchesUiState()
 }

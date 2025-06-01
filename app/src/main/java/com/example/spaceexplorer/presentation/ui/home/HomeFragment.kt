@@ -86,7 +86,7 @@ class HomeFragment : Fragment() {
                         binding.tvErrorMessage.text = state.message
                     }
                     is LaunchesUiState.NoInternetConnection -> {
-                        showNoInternetDialog("No internet connection. Please try again.")
+                        showNoInternetDialog(state.message)
                     }
                 }
             }
@@ -99,6 +99,7 @@ class HomeFragment : Fragment() {
             .setMessage(message)
             .setNegativeButton("Cancel") { dialog,  _ ->
                dialog.dismiss()
+               activity?.finish()
             }
             .show()
     }

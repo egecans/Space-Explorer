@@ -42,7 +42,7 @@ class HomeViewModel @Inject constructor(
                 .catch { e ->
                     Log.i("HomeViewModel", "Error fetching launches: ${e.message}")
                     _uiState.value = when (e) {
-                        is NoInternetException -> LaunchesUiState.NoInternetConnection
+                        is NoInternetException -> LaunchesUiState.NoInternetConnection(e.message ?: "No internet connection")
                         else -> LaunchesUiState.Error(e.message ?: "Unknown error")
                     }
                 }
