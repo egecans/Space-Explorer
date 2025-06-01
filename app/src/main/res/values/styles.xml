@@ -2,7 +2,7 @@
 <resources>
     <style name="LabelText">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/labelColor</item>
+        <item name="android:textColor">@color/spacex_white</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -11,14 +11,14 @@
 
     <style name="ValueText">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/valueColor</item>
+        <item name="android:textColor">@color/spacex_light_gray</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="LinkText">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/linkColor</item>
+        <item name="android:textColor">@color/link_text_color</item>
         <item name="android:textStyle">italic</item>
         <item name="android:autoLink">web</item>
         <item name="android:layout_width">0dp</item>

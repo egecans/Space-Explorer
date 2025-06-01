@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)    // Set toolbar as ActionBar
+        setSupportActionBar(toolbar)    // Set toolbar as ActionBar, get it from label in nav_graph.xml
 
         val navController = findNavController(R.id.nav_host_fragment)
         setupActionBarWithNavController(navController)

@@ -15,4 +15,7 @@
     <color name="spacex_light_gray">#E0E0E0</color>  <!-- Light gray for subtle text or dividers -->
     <color name="spacex_green">#4CAF50</color>       <!-- Green for success -->
     <color name="spacex_red">#F44336</color>         <!-- Red for failure -->
+
+    <color name="spacex_link_blue">#4A90E2</color> <!-- bright blue for links -->
+    <color name="spacex_link_hover">#357ABD</color> <!-- darker blue for pressed state -->
 </resources>

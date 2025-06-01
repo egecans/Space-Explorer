@@ -4,11 +4,14 @@
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/spacex_dark_gray"
     android:padding="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/spacex_dark_gray"
+        >
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -125,15 +128,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp" />
 
-        <!-- Rocket Description -->
+        <!-- Rocket Description Label -->
         <TextView
             android:id="@+id/labelRocketDesc"
             style="@style/LabelText"
             android:text="Rocket Description:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider3"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
+        <!-- Rocket Description Text -->
         <TextView
             android:id="@+id/valueRocketDesc"
             style="@style/ValueText"
@@ -141,9 +147,10 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="20"
-            app:layout_constraintStart_toEndOf="@id/labelRocketDesc"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/labelRocketDesc" />
+            app:layout_constraintTop_toBottomOf="@id/labelRocketDesc"
+            android:layout_marginTop="4dp"/>
 
         <View
             android:id="@+id/divider4"
