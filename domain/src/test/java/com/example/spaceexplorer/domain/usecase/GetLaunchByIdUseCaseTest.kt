@@ -16,12 +16,12 @@ import org.mockito.kotlin.whenever
 class GetLaunchByIdUseCaseTest {
 
     private lateinit var repository: com.example.spaceexplorer.domain.repository.LaunchRepository
-    private lateinit var useCase: com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase
+    private lateinit var useCase: GetLaunchByIdUseCase
 
     @Before
     fun setup() {
         repository = mock()
-        useCase = com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase(repository)
+        useCase = GetLaunchByIdUseCase(repository)
     }
 
     @Test

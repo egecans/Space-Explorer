@@ -2,6 +2,7 @@ package com.example.spaceexplorer.data.repository
 
 import android.content.Context
 import android.util.Log
+import com.example.spaceexplorer.common.NetworkChecker
 import com.example.spaceexplorer.common.NetworkUtils
 import com.example.spaceexplorer.common.error.NoInternetException
 import com.example.spaceexplorer.data.api.SpaceXApiService
@@ -32,7 +33,8 @@ import javax.inject.Inject
 class LaunchRepositoryImpl @Inject constructor(
     private val apiService: SpaceXApiService,
     private val database: SpaceExplorerDatabase,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val networkChecker: NetworkChecker   // Injected interface
 ) : LaunchRepository {
 
     private val launchDao = database.launchDao()
@@ -43,7 +45,7 @@ class LaunchRepositoryImpl @Inject constructor(
      */
     override fun getLaunches(): Flow<List<Launch>> = flow {
         // Check network availability before making API calls
-        if (NetworkUtils.isNetworkAvailable(context)){
+        if (networkChecker.isNetworkAvailable(context)){
             Log.i("LaunchRepository", "Network available, fetching launches and rockets from API")
             val launchesDto = apiService.getLaunches()
             val rocketsDto = apiService.getRockets()
@@ -90,7 +92,7 @@ class LaunchRepositoryImpl @Inject constructor(
      * Fetches detailed launch info by ID along with its rocket.
      */
     override suspend fun getLaunchById(id: String): Launch? {
-        if (NetworkUtils.isNetworkAvailable(context)) {
+        if (networkChecker.isNetworkAvailable(context)) {
             Log.i("LaunchRepository", "Network available, fetching launch by ID: $id")
             val launchDto = apiService.getLaunchById(id) ?: return null
             val rocketDto = apiService.getRocketById(launchDto.rocket) ?: return null
@@ -109,7 +111,7 @@ class LaunchRepositoryImpl @Inject constructor(
      * Fetches rocket info by ID.
      */
     override suspend fun getRocketById(id: String): Rocket? {
-        if (NetworkUtils.isNetworkAvailable(context)) {
+        if (networkChecker.isNetworkAvailable(context)) {
             Log.i("LaunchRepository", "Network available, fetching rocket by ID: $id")
             val rocketDto = apiService.getRocketById(id) ?: return null
             return rocketDto.toDomain()

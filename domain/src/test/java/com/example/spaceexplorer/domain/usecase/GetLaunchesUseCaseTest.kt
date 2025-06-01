@@ -17,12 +17,12 @@ import org.mockito.kotlin.whenever
 class GetLaunchesUseCaseTest {
 
     private lateinit var repository: com.example.spaceexplorer.domain.repository.LaunchRepository
-    private lateinit var useCase: com.example.spaceexplorer.domain.usecase.GetLaunchesUseCase
+    private lateinit var useCase: GetLaunchesUseCase
 
     @Before
     fun setup() {
         repository = mock()
-        useCase = com.example.spaceexplorer.domain.usecase.GetLaunchesUseCase(repository)
+        useCase = GetLaunchesUseCase(repository)
     }
 
     @Test

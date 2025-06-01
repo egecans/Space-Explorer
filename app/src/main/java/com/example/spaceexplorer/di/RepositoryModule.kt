@@ -1,6 +1,7 @@
 package com.example.spaceexplorer.di
 
 import android.content.Context
+import com.example.spaceexplorer.common.NetworkChecker
 import com.example.spaceexplorer.data.api.SpaceXApiService
 import com.example.spaceexplorer.data.db.SpaceExplorerDatabase
 import com.example.spaceexplorer.data.repository.LaunchRepositoryImpl
@@ -22,8 +23,9 @@ object RepositoryModule {
     fun provideLaunchRepository(
         apiService: SpaceXApiService,
         database: SpaceExplorerDatabase,
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
+        networkChecker: NetworkChecker
     ): LaunchRepository {
-        return LaunchRepositoryImpl(apiService, database, context)
+        return LaunchRepositoryImpl(apiService, database, context, networkChecker)
     }
 }

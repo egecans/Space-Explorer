@@ -1,7 +1,12 @@
 package com.example.spaceexplorer.data.repository
 
 import android.content.Context
+import android.content.SharedPreferences
+import com.example.spaceexplorer.common.NetworkChecker
+import com.example.spaceexplorer.common.NetworkUtils
 import com.example.spaceexplorer.data.api.SpaceXApiService
+import com.example.spaceexplorer.data.db.LaunchDao
+import com.example.spaceexplorer.data.db.SpaceExplorerDatabase
 import com.example.spaceexplorer.data.model.LaunchDto
 import com.example.spaceexplorer.data.model.LinksDto
 import com.example.spaceexplorer.data.model.RocketDto
@@ -12,31 +17,69 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.anyBoolean
+import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
+import org.mockito.Mockito.mockStatic
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.*
+import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@RunWith(RobolectricTestRunner::class) // it prevents giving error about logs
 class LaunchRepositoryImplTest {
 
     @Mock
-    private lateinit var apiService: com.example.spaceexplorer.data.api.SpaceXApiService
+    private lateinit var apiService: SpaceXApiService
+
+    @Mock
+    private lateinit var database: SpaceExplorerDatabase
+
+    @Mock
+    private lateinit var launchDao: LaunchDao
 
     @Mock
     private lateinit var context: Context
 
-    private lateinit var repository: com.example.spaceexplorer.data.repository.LaunchRepositoryImpl
+    @Mock
+    private lateinit var sharedPreferences: SharedPreferences
+
+    @Mock
+    private lateinit var sharedPrefsEditor: SharedPreferences.Editor
+
+    @Mock
+    private lateinit var networkChecker: NetworkChecker
+
+    private lateinit var repository: LaunchRepositoryImpl
 
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        repository =
-            com.example.spaceexplorer.data.repository.LaunchRepositoryImpl(apiService, context)
+
+
+
+        whenever(database.launchDao()).thenReturn(launchDao) // Mock Dao from database
+        // Mock network checker to simulate online or offline
+        whenever(networkChecker.isNetworkAvailable(any())).thenReturn(true) // or false for offline
+
+        repository = LaunchRepositoryImpl(apiService, database, context, networkChecker)
+
     }
 
     // Need to add network util to di, to not give error
     @Test
     fun `getLaunches returns mapped launches`() = runTest {
+
+        // for the sharedPref error
+        whenever(context.getSharedPreferences(anyString(), anyInt())).thenReturn(sharedPreferences)
+        whenever(sharedPreferences.getBoolean(anyString(), anyBoolean())).thenReturn(false)
+        whenever(sharedPreferences.edit()).thenReturn(sharedPrefsEditor)
+        whenever(sharedPrefsEditor.putBoolean(anyString(), anyBoolean())).thenReturn(sharedPrefsEditor)
+        whenever(sharedPrefsEditor.apply()).thenAnswer { /* do nothing */ }
+
+
         val rocketDto = com.example.spaceexplorer.data.model.RocketDto(
             "rocket1",
             "Falcon 9",

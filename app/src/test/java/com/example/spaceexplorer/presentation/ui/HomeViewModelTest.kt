@@ -1,10 +1,9 @@
-package com.example.spaceexplorer.presentation.ui.home
+package com.example.spaceexplorer.presentation.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.spaceexplorer.common.error.NoInternetException
-import com.example.spaceexplorer.domain.model.Launch
-import com.example.spaceexplorer.domain.usecase.GetLaunchesUseCase
 import com.example.spaceexplorer.presentation.model.LaunchesUiState
+import com.example.spaceexplorer.presentation.ui.home.HomeViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
@@ -13,9 +12,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.*
 import org.junit.*
 import org.junit.rules.TestRule
+import org.junit.runner.RunWith
 import org.mockito.kotlin.*
+import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@RunWith(RobolectricTestRunner::class) // it prevents giving error about logs
 class HomeViewModelTest {
 
     @get:Rule

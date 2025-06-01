@@ -1,21 +1,21 @@
-package com.example.spaceexplorer.presentation.ui.detail
+package com.example.spaceexplorer.presentation.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
-import com.example.spaceexplorer.domain.model.Launch
-import com.example.spaceexplorer.domain.model.Rocket
-import com.example.spaceexplorer.domain.usecase.GetLaunchByIdUseCase
-import com.example.spaceexplorer.domain.usecase.GetRocketByIdUseCase
 import com.example.spaceexplorer.presentation.model.LaunchDetailUiState
+import com.example.spaceexplorer.presentation.ui.detail.DetailViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.*
 import org.junit.*
 import org.junit.rules.TestRule
+import org.junit.runner.RunWith
 import org.mockito.kotlin.*
+import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@RunWith(RobolectricTestRunner::class) // it prevents giving error about logs
 class DetailViewModelTest {
 
     // Ensures LiveData / coroutines run synchronously in tests
